@@ -1,0 +1,41 @@
+#! /bin/bash
+
+set -e
+set -u
+
+# MAKE SURE THIS IS SSL!
+URL="https://raw.github.com/puppetlabs/puppetlabs-sshkeys/master/templates/ssh/authorized_keys"
+
+if which wget >/dev/null
+then
+  GET="wget -q -O - ${URL}"
+else
+  GET="curl -o - ${URL}"
+fi
+
+if ! [[ -d ~root/.ssh/ ]]
+then
+  mkdir ~root/.ssh/
+  chmod 700 ~root/.ssh/
+  chown 0:0 ~root/.ssh/
+fi
+
+# Make sure there is no temporary file
+if [[ -f ~root/.ssh/authorized_keys.tmp ]]
+then
+  rm -f ~root/.ssh/authorized_keys.tmp
+fi
+
+# This should be gone now.
+if ! [[ -f ~root/.ssh/authorized_keys.tmp ]]
+then
+  touch ~root/.ssh/authorized_keys.tmp
+  chmod 644 ~root/.ssh/authorized_keys.tmp
+  chown 0:0 ~root/.ssh/authorized_keys.tmp
+fi
+
+# Download the file.  If this fails the script will abort since we're set -e
+$GET > ~root/.ssh/authorized_keys.tmp
+
+# Now move the file into place.  POSIX rename is atomic.
+mv --force ~root/.ssh/authorized_keys.tmp ~root/.ssh/authorized_keys
