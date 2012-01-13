@@ -6,6 +6,13 @@ set -u
 # MAKE SURE THIS IS SSL!
 URL="https://raw.github.com/puppetlabs/puppetlabs-sshkeys/master/templates/ssh/authorized_keys"
 
+if [[ `uname` == CYGWIN* ]]
+then
+  OWNER="root:none"
+else
+  OWNER="0:0"
+fi
+
 if which wget >/dev/null
 then
   GET="wget -q -O - ${URL}"
@@ -17,7 +24,7 @@ if ! [[ -d ~root/.ssh/ ]]
 then
   mkdir ~root/.ssh/
   chmod 700 ~root/.ssh/
-  chown 0:0 ~root/.ssh/
+  chown $OWNER ~root/.ssh/
 fi
 
 # Make sure there is no temporary file
@@ -31,7 +38,7 @@ if ! [[ -f ~root/.ssh/authorized_keys.tmp ]]
 then
   touch ~root/.ssh/authorized_keys.tmp
   chmod 644 ~root/.ssh/authorized_keys.tmp
-  chown 0:0 ~root/.ssh/authorized_keys.tmp
+  chown $OWNER ~root/.ssh/authorized_keys.tmp
 fi
 
 # Download the file.  If this fails the script will abort since we're set -e
