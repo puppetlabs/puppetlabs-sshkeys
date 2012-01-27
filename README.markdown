@@ -35,8 +35,8 @@ The entry should look like:
 
 Ideally, keys should be registered in the [User Account
 Registry](https://docs.google.com/a/puppetlabs.com/spreadsheet/viewform?hl=en_US&formkey=dGl5YVFEX3R6a3p2Vm5wMlRkNDZaVWc6MQ#gid=2)
-and then added to the templates/ssh/ directory of this repository.  Once merged
-into the master branch, the keys will automatically be copied to all of the
-hosts using this script.
+and then added to the templates/ssh/ directory of this repository, as username.pub and added to the authorized\_keys file too.
+Once merged into the master branch, the keys will automatically be
+copied to all of the hosts using this script.
 
 EOF
