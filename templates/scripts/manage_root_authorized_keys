@@ -8,9 +8,13 @@ URL="https://raw.github.com/puppetlabs/puppetlabs-sshkeys/master/templates/ssh/a
 
 if [[ `uname` == CYGWIN* ]]
 then
-  OWNER="root:none"
+  OWNER="Administrator"
+  GROUP="None"
+  SSH_HOME=~Administrator/.ssh/
 else
-  OWNER="0:0"
+  OWNER="0"
+  GROUP="0"
+  SSH_HOME=~root/.ssh/
 fi
 
 if which wget >/dev/null
@@ -20,29 +24,29 @@ else
   GET="curl -o - ${URL}"
 fi
 
-if ! [[ -d ~root/.ssh/ ]]
+if ! [[ -d $SSH_HOME ]]
 then
-  mkdir ~root/.ssh/
-  chmod 700 ~root/.ssh/
-  chown $OWNER ~root/.ssh/
+  mkdir $SSH_HOME
+  chmod 700 $SSH_HOME
+  chown $OWNER:$GROUP $SSH_HOME
 fi
 
 # Make sure there is no temporary file
-if [[ -f ~root/.ssh/authorized_keys.tmp ]]
+if [[ -f $SSH_HOME/authorized_keys.tmp ]]
 then
-  rm -f ~root/.ssh/authorized_keys.tmp
+  rm -f $SSH_HOME/authorized_keys.tmp
 fi
 
 # This should be gone now.
-if ! [[ -f ~root/.ssh/authorized_keys.tmp ]]
+if ! [[ -f $SSH_HOME/authorized_keys.tmp ]]
 then
-  touch ~root/.ssh/authorized_keys.tmp
-  chmod 644 ~root/.ssh/authorized_keys.tmp
-  chown $OWNER ~root/.ssh/authorized_keys.tmp
+  touch $SSH_HOME/authorized_keys.tmp
+  chmod 644 $SSH_HOME/authorized_keys.tmp
+  chown $OWNER:$GROUP $SSH_HOME/authorized_keys.tmp
 fi
 
 # Download the file.  If this fails the script will abort since we're set -e
-$GET > ~root/.ssh/authorized_keys.tmp
+$GET > $SSH_HOME/authorized_keys.tmp
 
 # Now move the file into place.  POSIX rename is atomic.
-mv --force ~root/.ssh/authorized_keys.tmp ~root/.ssh/authorized_keys
+mv --force $SSH_HOME/authorized_keys.tmp $SSH_HOME/authorized_keys
