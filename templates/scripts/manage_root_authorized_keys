@@ -49,4 +49,4 @@ fi
 $GET > $SSH_HOME/authorized_keys.tmp
 
 # Now move the file into place.  POSIX rename is atomic.
-mv --force $SSH_HOME/authorized_keys.tmp $SSH_HOME/authorized_keys
+mv -f $SSH_HOME/authorized_keys.tmp $SSH_HOME/authorized_keys
