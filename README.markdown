@@ -14,7 +14,7 @@ this process.
 If the host has a cron that uses /etc/cron.hourly/ then simply copy the script into /etc/cron.hourly/ like this:
 
     cd /etc/cron.hourly/
-    wget https://raw.github.com/puppetlabs/puppetlabs-sshkeys/master/templates/scripts/manage_root_authorized_keys
+    curl -O https://raw.github.com/puppetlabs/puppetlabs-sshkeys/master/templates/scripts/manage_root_authorized_keys
     chmod +x manage_root_authorized_keys
 
 If the cron on the system does not support cron.hourly, the following crontab
@@ -22,7 +22,7 @@ entry may be used.
 
     mkdir -p /usr/local/bin
     cd /usr/local/bin
-    wget https://raw.github.com/puppetlabs/puppetlabs-sshkeys/master/templates/scripts/manage_root_authorized_keys
+    curl -O https://raw.github.com/puppetlabs/puppetlabs-sshkeys/master/templates/scripts/manage_root_authorized_keys
     chmod +x manage_root_authorized_keys
     crontab -e
 
