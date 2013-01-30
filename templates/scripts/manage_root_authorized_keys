@@ -17,11 +17,11 @@ else
   SSH_HOME=~root/.ssh/
 fi
 
-if which wget >/dev/null
+if which curl 2>&1 >/dev/null
 then
-  GET="wget -q -O - ${URL}"
-else
   GET="curl -o - ${URL}"
+else
+  GET="wget -q -O - ${URL}"
 fi
 
 if ! [[ -d $SSH_HOME ]]
