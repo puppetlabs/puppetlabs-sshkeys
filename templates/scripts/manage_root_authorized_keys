@@ -48,5 +48,5 @@ fi
 # Download the file.  If this fails the script will abort since we're set -e
 $GET > $SSH_HOME/authorized_keys.tmp
 
-# Now move the file into place.  POSIX rename is atomic.
-mv -f $SSH_HOME/authorized_keys.tmp $SSH_HOME/authorized_keys
+# append keys to existing authorized_keys file, creates file if it is absent
+cat $SSH_HOME/authorized_keys.tmp >> $SSH_HOME/authorized_keys
