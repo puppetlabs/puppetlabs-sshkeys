@@ -59,7 +59,5 @@ while read ENTRY; do
   if ! grep -q "$ENTRY" $SSH_HOME/authorized_keys
   then
     echo $ENTRY >> $SSH_HOME/authorized_keys
-  else 
-    echo "matched $ENTRY"
   fi
 done < $SSH_HOME/authorized_keys.tmp
