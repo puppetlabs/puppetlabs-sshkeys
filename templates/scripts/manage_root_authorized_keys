@@ -1,6 +1,5 @@
 #! /bin/bash
 
-set -e
 set -u
 
 # MAKE SURE THIS IS SSL!
@@ -19,7 +18,7 @@ fi
 
 if which curl 2>&1 >/dev/null
 then
-  GET="curl -o - ${URL}"
+  GET="curl --silent -o - ${URL}"
 else
   GET="wget -q -O - ${URL}"
 fi
@@ -48,16 +47,13 @@ fi
 # Download the file.  If this fails the script will abort since we're set -e
 $GET > $SSH_HOME/authorized_keys.tmp
 
-# append absent keys to existing authorized_keys file, creates file if it is absent
-if ! [[ -f $SSH_HOME/authorized_keys ]]
+# Merge any local authorized_keys
+# Make sure there is no temporary file
+if [[ -f $SSH_HOME/authorized_keys.local ]]
 then
-  touch $SSH_HOME/authorized_keys
-  chmod 644 $SSH_HOME/authorized_keys
-  chown $OWNER:$GROUP $SSH_HOME/authorized_keys
+  cp -p $SSH_HOME/authorized_keys.{tmp,downloaded}
+  cat $SSH_HOME/authorized_keys.{local,downloaded} | sort | uniq > authorized_keys.tmp
 fi
-while read ENTRY; do           
-  if ! grep -q "$ENTRY" $SSH_HOME/authorized_keys
-  then
-    echo $ENTRY >> $SSH_HOME/authorized_keys
-  fi
-done < $SSH_HOME/authorized_keys.tmp
+
+# Now move the file into place.  POSIX rename is atomic.
+mv -f $SSH_HOME/authorized_keys.tmp $SSH_HOME/authorized_keys
