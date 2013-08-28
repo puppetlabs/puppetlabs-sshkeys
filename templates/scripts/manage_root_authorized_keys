@@ -58,7 +58,7 @@ fi
 if [[ -f $SSH_HOME/authorized_keys.local ]]
 then
   cp -p $SSH_HOME/authorized_keys.{tmp,downloaded}
-  cat $SSH_HOME/authorized_keys.{local,downloaded} | sort | uniq > authorized_keys.tmp
+  cat $SSH_HOME/authorized_keys.{local,downloaded} | sort | uniq > $SSH_HOME/authorized_keys.tmp
 fi
 
 # Now move the file into place.  POSIX rename is atomic.
