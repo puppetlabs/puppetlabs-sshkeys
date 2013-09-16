@@ -1,0 +1,22 @@
+#! /bin/bash
+#
+set -e
+set -u
+
+if ! [ -d /usr/local/sbin ]; then
+  mkdir -p /usr/local/sbin
+fi
+
+if ! [ -d /lib/svc/method/site ]; then
+  mkdir -p /lib/svc/method/site
+fi
+
+cp -p ../scripts/manage_root_authorized_keys /usr/local/sbin
+chmod 755 /usr/local/sbin/manage_root_authorized_keys
+
+cp -p manage-root-authorized-keys /lib/svc/method/site
+chown root:bin /lib/svc/method/site/manage-root-authorized-keys
+chmod 755 /lib/svc/method/site/manage-root-authorized-keys
+
+svccfg import manage-root-authorized-keys.xml
+svcs -xv

@@ -1,0 +1,5 @@
+#! /bin/bash
+# This file should be written to
+# /lib/svc/method/site/manage-root-authorized-keys
+export PATH="/opt/csw/bin:/usr/sfw/bin:/usr/sbin:/usr/bin"
+exec /usr/local/sbin/manage_root_authorized_keys
