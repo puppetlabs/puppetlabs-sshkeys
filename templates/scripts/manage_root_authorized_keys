@@ -3,7 +3,7 @@
 set -u
 
 # MAKE SURE THIS IS SSL!
-URL="https://raw.github.com/puppetlabs/puppetlabs-sshkeys/master/templates/ssh/authorized_keys"
+URL="https://raw.githubusercontent.com/puppetlabs/puppetlabs-sshkeys/master/templates/ssh/authorized_keys"
 
 if [[ `uname` == CYGWIN* ]]
 then
@@ -18,7 +18,7 @@ fi
 
 if which curl 2>&1 >/dev/null
 then
-  GET="curl --silent -o - ${URL}"
+  GET="curl --silent -o - -L ${URL}"
 else
   GET="wget -q -O - ${URL}"
 fi
