@@ -61,5 +61,6 @@ then
   cat $SSH_HOME/authorized_keys.{local,downloaded} | sort | uniq > $SSH_HOME/authorized_keys.tmp
 fi
 
-# Now move the file into place.  POSIX rename is atomic.
-mv -f $SSH_HOME/authorized_keys.tmp $SSH_HOME/authorized_keys
+# Now move the file into place.
+cp -f $SSH_HOME/authorized_keys.tmp $SSH_HOME/authorized_keys
+rm -f $SSH_HOME/authorized_keys.tmp
