@@ -35,11 +35,9 @@ The entry should look like:
 ```
 
 # Adding Keys
-Ideally, keys should be registered in the [User Account
-Registry](https://docs.google.com/a/puppetlabs.com/spreadsheet/viewform?hl=en_US&formkey=dGl5YVFEX3R6a3p2Vm5wMlRkNDZaVWc6MQ#gid=2),
-then added to the `templates/ssh/` directory of this repository. Add your
-public key as `username.pub`, and then append it to `authorized_keys`. This
-might look something like:
+Keys should be added to the `templates/ssh/` directory of this repository.
+Add your public key as `username.pub`, and then append it to `authorized_keys`.
+This might look something like:
 
 ```bash
 # Be sure to replace SSHKEY_DIR and USERNAME with the correct values!
