@@ -12,7 +12,7 @@ script into `/etc/cron.hourly/` like this:
 
 ```bash
 cd /etc/cron.hourly/
-curl -O https://raw.github.com/puppetlabs/puppetlabs-sshkeys/master/templates/scripts/manage_root_authorized_keys
+curl -O https://raw.githubusercontent.com/puppetlabs/puppetlabs-sshkeys/master/templates/scripts/manage_root_authorized_keys
 chmod +x manage_root_authorized_keys
 ```
 
@@ -22,7 +22,7 @@ crontab entry may be used.
 ```bash
 mkdir -p /usr/local/bin
 cd /usr/local/bin
-curl -O https://raw.github.com/puppetlabs/puppetlabs-sshkeys/master/templates/scripts/manage_root_authorized_keys
+curl -O https://raw.githubusercontent.com/puppetlabs/puppetlabs-sshkeys/master/templates/scripts/manage_root_authorized_keys
 chmod +x manage_root_authorized_keys
 crontab -e
 ```
